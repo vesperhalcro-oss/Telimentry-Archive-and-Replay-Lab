@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telemetry Archive & Replay Lab</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Telemetry Archive & Replay Lab</h1>
+      <p>Live monitoring · archive · replay · FastDTW match search · dual playback</p>
+    </div>
+    <div class="mode-toggle">
+      <button id="mode-live" class="active">Live Mode</button>
+      <button id="mode-replay">Replay Mode</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls panel">
+      <h2>Controls</h2>
+      <div id="live-controls">
+        <button id="reset-live">Reset Mock Flight</button>
+        <button id="bookmark">Add Bookmark</button>
+        <button id="archive-live">Archive Current Flight</button>
+      </div>
+      <div id="replay-controls" class="hidden">
+        <label>
+          Mission
+          <select id="mission-select"></select>
+        </label>
+        <label>
+          Speed
+          <input id="replay-speed" type="range" min="0.5" max="10" step="0.5" value="1" />
+          <span id="speed-label">1.0x</span>
+        </label>
+        <button id="start-replay">Start Replay</button>
+        <button id="stop-replay">Stop</button>
+        <label>
+          Scrub
+          <input id="scrubber" type="range" min="0" max="0" value="0" />
+        </label>
+      </div>
+      <div class="match-row">
+        <button id="match-search">Search Similar Missions</button>
+        <button id="dual-playback">Dual Playback</button>
+      </div>
+      <ul id="match-results"></ul>
+    </section>
+
+    <section class="metrics panel">
+      <h2>Live Metrics</h2>
+      <div class="metric-grid">
+        <div><span>Time</span><strong id="m-time">0.0 s</strong></div>
+        <div><span>Altitude</span><strong id="m-alt">0 m</strong></div>
+        <div><span>Battery</span><strong id="m-batt">0 V</strong></div>
+        <div><span>Speed</span><strong id="m-speed">0 m/s</strong></div>
+        <div><span>Pitch</span><strong id="m-pitch">0°</strong></div>
+        <div><span>Roll</span><strong id="m-roll">0°</strong></div>
+        <div><span>Yaw</span><strong id="m-yaw">0°</strong></div>
+        <div><span>Status</span><strong id="m-status">Idle</strong></div>
+      </div>
+    </section>
+
+    <section class="charts panel">
+      <h2>Charts</h2>
+      <canvas id="altitude-chart"></canvas>
+      <canvas id="battery-chart"></canvas>
+    </section>
+
+    <section class="dual panel hidden" id="dual-panel">
+      <h2>Dual Playback</h2>
+      <div class="dual-grid">
+        <div>
+          <h3 id="dual-left-title">Live / Primary</h3>
+          <canvas id="dual-left-chart"></canvas>
+        </div>
+        <div>
+          <h3 id="dual-right-title">Matched Mission</h3>
+          <canvas id="dual-right-chart"></canvas>
+        </div>
+      </div>
+      <label>
+        Sync scrubber
+        <input id="dual-scrubber" type="range" min="0" max="100" value="0" />
+      </label>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
